@@ -1,1 +1,1 @@
-docker run --platform=linux/amd64 --name sid-kohei-container -it sid-kohei-dev:latest bash
+docker run --platform=linux/amd64 --name sid-kohei-container --privileged --shm-size=512m -it sid-kohei-dev:latest bash
