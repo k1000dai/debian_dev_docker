@@ -1,0 +1,1 @@
+docker run --platform=linux/amd64 --name sid-kohei-container -it sid-kohei-dev:latest bash

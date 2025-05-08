@@ -3,14 +3,12 @@ FROM --platform=linux/amd64 debian:sid
 ENV DEBEMAIL="kouhei.sendai@gmail.com"
 ENV DEBFULLNAME="Kohei Sendai"
 
-ENV PROJECT_DIR=/root/kohei
-
 RUN set -x \
     && apt update \
     && apt upgrade -y
 
 RUN set -x \
-    && apt install curl wget -y
+    && apt install curl wget vim -y
 
 RUN set -x \
     && apt install sbuild sudo locales \
@@ -18,4 +16,12 @@ RUN set -x \
     dh-make devscripts git-buildpackage \
     git lintian python3-all python3-setuptools -y  
 
-WORKDIR ${PROJECT_DIR}
+# git config
+RUN set -x \
+    && git config --global user.name "Kohei Sendai" \
+    && git config --global user.email "kouhei.sendai@gmail.com"\
+    && git config --global core.editor "vim"
+
+
+# bashrc
+COPY .bashrc /root/.bashrc
