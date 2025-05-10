@@ -29,9 +29,7 @@ COPY .bashrc /root/.bashrc
 RUN set -x \
     mkdir -p /root/.ssh 
 
-COPY id_ed25519 /root/.ssh/id_ed25519 
-
-COPY config /root/.ssh/config 
+COPY ssh_config /root/.ssh
 
 RUN set -x \
     && chmod 600 /root/.ssh/id_ed25519 \

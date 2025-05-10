@@ -34,3 +34,12 @@ COPY ssh_config /root/.ssh
 RUN set -x \
     && chmod 600 /root/.ssh/id_ed25519 \
     && chmod 644 /root/.ssh/config
+
+# set up gpu
+RUN set -x \
+    && touch /etc/apt/sources.list \
+    && echo "deb http://deb.debian.org/debian/ sid main contrib non-free non-free-firmware" > /etc/apt/sources.list
+
+RUN set -x \
+    && apt update \
+    && apt install nvidia-driver -y 
