@@ -34,3 +34,35 @@ COPY ssh_config /root/.ssh
 RUN set -x \
     && chmod 600 /root/.ssh/id_ed25519 \
     && chmod 644 /root/.ssh/config
+
+# install neovim
+RUN set -x \
+    && apt install -y build-essential cmake gettext
+
+RUN set -x \
+    && git clone https://github.com/neovim/neovim \
+    && cd neovim \
+    && make CMAKE_BUILD_TYPE=RelWithDebInfo  -j$(nproc) \
+    && make install
+
+RUN set -x \
+    && git clone https://github.com/k1000dai/nvim ~/.config/nvim
+
+RUN set -x \
+    && git clone https://github.com/Shougo/dein.vim ~/.cache/dein/repos/github.com/Shougo/dein.vim
+
+    # Install Node.js
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
+
+RUN set -x \
+    && . ~/.bashrc \
+    && nvm install --lts \
+    && nvm install node
+
+#Install ripgrep
+RUN set -x \
+    && apt update \
+    && apt install -y ripgrep
+# Install clangd
+RUN set -x \
+    && apt install -y clangd \
