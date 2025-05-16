@@ -17,7 +17,7 @@ RUN set -x \
     git lintian python3-all python3-setuptools -y  
 
 RUN set -x \
-    apt install debcargo -y
+    apt install reprepro debcargo -y
 
 # git config
 RUN set -x \
@@ -31,12 +31,6 @@ COPY .bashrc /root/.bashrc
 
 RUN set -x \
     mkdir -p /root/.ssh 
-
-COPY ssh_config /root/.ssh
-
-RUN set -x \
-    && chmod 600 /root/.ssh/id_ed25519 \
-    && chmod 644 /root/.ssh/config
 
 # install neovim
 RUN set -x \
@@ -68,4 +62,4 @@ RUN set -x \
     && apt install -y ripgrep
 # Install clangd
 RUN set -x \
-    && apt install -y clangd \
+    && apt install -y clangd 

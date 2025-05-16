@@ -33,12 +33,6 @@ COPY .bashrc /root/.bashrc
 RUN set -x \
     mkdir -p /root/.ssh 
 
-# set up ssh
-COPY ssh_config /root/.ssh
-RUN set -x \
-    && chmod 600 /root/.ssh/id_ed25519 \
-    && chmod 644 /root/.ssh/config
-
 # set up gpu
 RUN set -x \
     && touch /etc/apt/sources.list \
