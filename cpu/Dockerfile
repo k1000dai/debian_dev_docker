@@ -17,7 +17,7 @@ RUN set -x \
     git lintian python3-all python3-setuptools -y  
 
 RUN set -x \
-    apt install reprepro debcargo -y
+    && apt install reprepro debcargo -y
 
 # git config
 RUN set -x \
