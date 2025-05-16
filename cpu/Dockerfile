@@ -16,6 +16,9 @@ RUN set -x \
     dh-make devscripts git-buildpackage \
     git lintian python3-all python3-setuptools -y  
 
+RUN set -x \
+    apt install debcargo -y
+
 # git config
 RUN set -x \
     && git config --global user.name "Kohei Sendai" \
