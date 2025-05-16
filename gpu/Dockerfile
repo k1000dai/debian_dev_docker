@@ -16,6 +16,10 @@ RUN set -x \
     dh-make devscripts git-buildpackage \
     git lintian python3-all python3-setuptools -y  
 
+RUN set -x \
+    apt install cargo rustc dh-cargo debcargo git devscripts quilt \
+    reprepro debootstrap sbuild schroot autopkgtest -y
+
 # git config
 RUN set -x \
     && git config --global user.name "Kohei Sendai" \
