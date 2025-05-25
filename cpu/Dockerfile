@@ -40,7 +40,7 @@ RUN set -x \
     && apt install -y build-essential cmake gettext
 
 RUN set -x \
-    && git clone https://github.com/neovim/neovim \
+    && git clone --branch v0.11.1 https://github.com/neovim/neovim \
     && cd neovim \
     && make CMAKE_BUILD_TYPE=RelWithDebInfo  -j$(nproc) \
     && make install
