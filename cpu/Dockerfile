@@ -29,7 +29,10 @@ RUN set -x \
 RUN set -x \
     && sbuild-createchroot  --chroot-prefix debcargo-unstable unstable /srv/chroot/debcargo-unstable-amd64-sbuild http://deb.debian.org/debian
 
-# bashrc
+RUN set -x \
+    && sbuild-createchroot --arch=amd64 sid /srv/chroot/sid-amd64-sbuild http://deb.debian.org/debian
+
+    # bashrc
 COPY .bashrc /root/.bashrc
 
 RUN set -x \
