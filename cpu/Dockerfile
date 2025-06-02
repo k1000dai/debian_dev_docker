@@ -39,14 +39,15 @@ RUN set -x \
 RUN set -x \
     && sbuild-createchroot --arch=amd64 sid /srv/chroot/sid-amd64 http://deb.debian.org/debian
 
+
 # set up user
 RUN useradd -m -s /bin/bash -G sudo devuser \
     && echo 'devuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 WORKDIR /home/devuser
-USER devuser
 
 # bashrc
-COPY .bashrc /home/devuser/.bashrc
+COPY --chown=devuser:devuser .bashrc /home/devuser/.bashrc
+USER devuser
 
 RUN set -x \
     && mkdir -p /home/devuser/.ssh 
