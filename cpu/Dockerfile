@@ -20,6 +20,7 @@ RUN set -x \
 RUN set -x \
     && apt install reprepro debcargo -y
 
+
 RUN set -x \
     && apt install -y build-essential cmake gettext
 
@@ -46,7 +47,6 @@ USER devuser
 
 # bashrc
 COPY .bashrc /home/devuser/.bashrc
-RUN chown devuser:devuser /home/devuser/.bashrc
 
 RUN set -x \
     && mkdir -p /home/devuser/.ssh 
@@ -56,18 +56,20 @@ RUN set -x \
     && git clone --branch v0.11.1 https://github.com/neovim/neovim \
     && cd neovim \
     && make CMAKE_BUILD_TYPE=RelWithDebInfo  -j$(nproc) \
-    && make install
+    && sudo make install
 
 RUN set -x \
     && git clone https://github.com/k1000dai/nvim ~/.config/nvim
 
 RUN set -x \
     && git clone https://github.com/Shougo/dein.vim ~/.cache/dein/repos/github.com/Shougo/dein.vim
+    
 # git config
 RUN set -x \
     && git config --global user.name "Kohei Sendai" \
     && git config --global user.email "kouhei.sendai@gmail.com"\
     && git config --global core.editor "vim"
+
 # Install Node.js
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
 ENV NVM_DIR="/home/devuser/.nvm"
