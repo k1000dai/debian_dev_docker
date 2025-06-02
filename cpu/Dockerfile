@@ -7,6 +7,12 @@ RUN set -x \
     && apt update \
     && apt upgrade -y
 
+# set up user
+RUN useradd -m -s /bin/bash -G sudo devuser \
+    && echo 'devuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+USER devuser
+WORKDIR /home/devuser
+
 RUN set -x \
     && apt install curl wget vim -y
 
