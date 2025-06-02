@@ -7,7 +7,6 @@ ENV DEBFULLNAME="Kohei Sendai"
 # set up user
 RUN useradd -m -s /bin/bash -G sudo devuser \
     && echo 'devuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-WORKDIR /home/devuser
 
 RUN set -x \
     && apt update \
@@ -44,6 +43,7 @@ RUN set -x \
     && sbuild-createchroot --arch=amd64 sid /srv/chroot/sid-amd64 http://deb.debian.org/debian
 
 # set up user
+WORKDIR /home/devuser
 USER devuser
 
 # bashrc
