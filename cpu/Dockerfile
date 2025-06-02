@@ -4,10 +4,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV DEBEMAIL="kouhei.sendai@gmail.com"
 ENV DEBFULLNAME="Kohei Sendai"
 
-# set up user
-RUN useradd -m -s /bin/bash -G sudo devuser \
-    && echo 'devuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-
 RUN set -x \
     && apt update \
     && apt upgrade -y
@@ -43,6 +39,8 @@ RUN set -x \
     && sbuild-createchroot --arch=amd64 sid /srv/chroot/sid-amd64 http://deb.debian.org/debian
 
 # set up user
+RUN useradd -m -s /bin/bash -G sudo devuser \
+    && echo 'devuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 WORKDIR /home/devuser
 USER devuser
 
