@@ -32,10 +32,10 @@ RUN set -x \
 RUN set -x \
     && sbuild-createchroot --arch=amd64 sid /srv/chroot/sid-amd64 http://deb.debian.org/debian
     # bashrc
-COPY .bashrc /root/.bashrc
+COPY .bashrc /home/devuser/.bashrc
 
 RUN set -x \
-    mkdir -p /root/.ssh 
+    mkdir -p /home/devuser/.ssh 
 
 # install neovim
 RUN set -x \
