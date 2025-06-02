@@ -63,7 +63,7 @@ RUN set -x \
 
 RUN set -x \
     && git clone https://github.com/Shougo/dein.vim ~/.cache/dein/repos/github.com/Shougo/dein.vim
-    
+
 # git config
 RUN set -x \
     && git config --global user.name "Kohei Sendai" \
@@ -74,6 +74,6 @@ RUN set -x \
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
 ENV NVM_DIR="/home/devuser/.nvm"
 RUN set -x \
-    && source "$NVM_DIR/nvm.sh" \
+    && . "$NVM_DIR/nvm.sh" \
     && nvm install --lts \
     && nvm install node
