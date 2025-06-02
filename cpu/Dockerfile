@@ -1,5 +1,6 @@
 FROM --platform=linux/amd64 debian:sid
 
+ENV DEBIAN_FRONTEND=noninteractive
 ENV DEBEMAIL="kouhei.sendai@gmail.com"
 ENV DEBFULLNAME="Kohei Sendai"
 
