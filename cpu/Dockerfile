@@ -3,6 +3,11 @@ FROM --platform=linux/amd64 debian:sid
 ENV DEBEMAIL="kouhei.sendai@gmail.com"
 ENV DEBFULLNAME="Kohei Sendai"
 
+# set up user
+RUN useradd -m -s /bin/bash -G sudo devuser \
+    && echo 'devuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+WORKDIR /home/devuser
+
 RUN set -x \
     && apt update \
     && apt upgrade -y
@@ -19,11 +24,16 @@ RUN set -x \
 RUN set -x \
     && apt install reprepro debcargo -y
 
-# git config
 RUN set -x \
-    && git config --global user.name "Kohei Sendai" \
-    && git config --global user.email "kouhei.sendai@gmail.com"\
-    && git config --global core.editor "vim"
+    && apt install -y build-essential cmake gettext
+
+#Install ripgrep
+RUN set -x \
+    && apt update \
+    && apt install -y ripgrep
+# Install clangd
+RUN set -x \
+    && apt install -y clangd 
 
 # sbuild-createchroot
 RUN set -x \
@@ -31,16 +41,18 @@ RUN set -x \
 
 RUN set -x \
     && sbuild-createchroot --arch=amd64 sid /srv/chroot/sid-amd64 http://deb.debian.org/debian
-    # bashrc
+
+# set up user
+USER devuser
+
+# bashrc
 COPY .bashrc /home/devuser/.bashrc
+RUN chown devuser:devuser /home/devuser/.bashrc
 
 RUN set -x \
-    mkdir -p /home/devuser/.ssh 
+    && mkdir -p /home/devuser/.ssh 
 
 # install neovim
-RUN set -x \
-    && apt install -y build-essential cmake gettext
-
 RUN set -x \
     && git clone --branch v0.11.1 https://github.com/neovim/neovim \
     && cd neovim \
@@ -52,26 +64,15 @@ RUN set -x \
 
 RUN set -x \
     && git clone https://github.com/Shougo/dein.vim ~/.cache/dein/repos/github.com/Shougo/dein.vim
-
-    # Install Node.js
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
-
+# git config
 RUN set -x \
-    && . ~/.bashrc \
+    && git config --global user.name "Kohei Sendai" \
+    && git config --global user.email "kouhei.sendai@gmail.com"\
+    && git config --global core.editor "vim"
+# Install Node.js
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
+ENV NVM_DIR="/home/devuser/.nvm"
+RUN set -x \
+    && source "$NVM_DIR/nvm.sh" \
     && nvm install --lts \
     && nvm install node
-
-#Install ripgrep
-RUN set -x \
-    && apt update \
-    && apt install -y ripgrep
-# Install clangd
-RUN set -x \
-    && apt install -y clangd 
-
-
-# set up user
-RUN useradd -m -s /bin/bash -G sudo devuser \
-    && echo 'devuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-USER devuser
-WORKDIR /home/devuser
