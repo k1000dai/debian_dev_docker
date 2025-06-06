@@ -18,7 +18,7 @@ RUN set -x \
     git lintian python3-all python3-setuptools -y  
 
 RUN set -x \
-    && apt install reprepro debcargo -y
+    && apt install reprepro debcargo cme -y
 
 
 RUN set -x \
@@ -47,10 +47,12 @@ WORKDIR /home/devuser
 
 # bashrc
 COPY --chown=devuser:devuser .bashrc /home/devuser/.bashrc
-USER devuser
 
-RUN set -x \
-    && mkdir -p /home/devuser/.ssh 
+# add user to sbuild
+RUN sbuild-adduser devuser
+
+# set user to devuser
+USER devuser
 
 # install neovim
 RUN set -x \
