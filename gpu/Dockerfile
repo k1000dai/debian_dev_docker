@@ -1,5 +1,6 @@
 FROM --platform=linux/amd64 ghcr.io/k1000dai/debian_dev_docker:main
 
+USER root
 # set up gpu
 RUN set -x \
     && touch /etc/apt/sources.list \
@@ -11,3 +12,5 @@ RUN set -x \
 
 RUN set -x \
     && apt install nvidia-cuda-dev nvidia-cuda-toolkit -y 
+
+USER devuser
