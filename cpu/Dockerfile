@@ -20,6 +20,8 @@ RUN set -x \
 RUN set -x \
     && apt install reprepro debcargo cme -y
 
+RUn set -x \
+    && apt install reportbug -y
 
 RUN set -x \
     && apt install -y build-essential cmake gettext
