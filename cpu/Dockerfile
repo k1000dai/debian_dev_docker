@@ -24,6 +24,9 @@ RUn set -x \
     && apt install reportbug -y
 
 RUN set -x \
+    && apt install msmtp-mta -y 
+
+RUN set -x \
     && apt install -y build-essential cmake gettext
 
 #Install ripgrep
