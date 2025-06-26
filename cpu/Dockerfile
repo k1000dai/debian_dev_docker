@@ -45,21 +45,6 @@ RUN set -x \
 RUN set -x \
     && sbuild-createchroot --arch=amd64 sid /srv/chroot/sid-amd64 http://deb.debian.org/debian
 
-    # Configure schroot with overlay options
-RUN echo "[debcargo-unstable-amd64-sbuild]" > /etc/schroot/chroot.d/debcargo-unstable-amd64-sbuild.conf && \
-    echo "description=Debcargo unstable chroot" >> /etc/schroot/chroot.d/debcargo-unstable-amd64-sbuild.conf && \
-    echo "directory=/srv/chroot/debcargo-unstable-amd64-sbuild" >> /etc/schroot/chroot.d/debcargo-unstable-amd64-sbuild.conf && \
-    echo "type=directory" >> /etc/schroot/chroot.d/debcargo-unstable-amd64-sbuild.conf && \
-    echo "union-type=overlay" >> /etc/schroot/chroot.d/debcargo-unstable-amd64-sbuild.conf && \
-    echo "union-overlay-directory=/dev/shm" >> /etc/schroot/chroot.d/debcargo-unstable-amd64-sbuild.conf
-    
-RUN echo "[sid-amd64]" > /etc/schroot/chroot.d/sid-amd64.conf && \
-    echo "description=Sid chroot" >> /etc/schroot/chroot.d/sid-amd64.conf && \
-    echo "directory=/srv/chroot/sid-amd64" >> /etc/schroot/chroot.d/sid-amd64.conf && \
-    echo "type=directory" >> /etc/schroot/chroot.d/sid-amd64.conf && \
-    echo "union-typel=overlay" >> /etc/schroot/chroot.d/sid-amd64.conf && \
-    echo "union-overlay-directory=/dev/shm" >> /etc/schroot/chroot.d/sid-amd64.conf
-
 # set up user
 RUN useradd -m -s /bin/bash -G sudo devuser \
     && echo 'devuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
