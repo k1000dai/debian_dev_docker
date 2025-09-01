@@ -85,3 +85,8 @@ RUN set -x \
     && . "$NVM_DIR/nvm.sh" \
     && nvm install --lts \
     && nvm install node
+
+# sbuild config
+RUN mkdir -p /home/devuser/.config
+RUN printf '$chroot_mode = "schroot";\n$schroot = "schroot";\n' >> ~/.config/sbuild/config.pl
+RUN printf '$run_autopkgtest = 1;\n' >> ~/.config/sbuild/config.pl
