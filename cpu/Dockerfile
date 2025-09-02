@@ -43,7 +43,7 @@ RUN set -x \
 
 
 RUN set -x \
-    && sbuild-createchroot --arch=amd64 sid /srv/chroot/sid-amd64 http://deb.debian.org/debian
+    && sbuild-createchroot --components=main,contrib,non-free,non-free-firmware　--arch=amd64 sid /srv/chroot/sid-amd64 http://deb.debian.org/debian
 
 # set up user
 RUN useradd -m -s /bin/bash -G sudo devuser \
